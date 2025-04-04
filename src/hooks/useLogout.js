@@ -8,10 +8,11 @@ const useLogout = () => {
     const logout = async () => {
         setLoading(true);
         try {
-            // const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`, {
-            const res = await fetch(`/api/auth/logout`, {
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`, {
+            // const res = await fetch(`/api/auth/logout`, {
                 method: "POST",
-                headers: { "Content-type": "application/json" }
+                headers: { "Content-type": "application/json" },
+                credentials: 'include'
             })
             const data = await res.json();
             if (data.error) {

@@ -15,10 +15,11 @@ const useLogin = () => {
 
         setLoading(true);
         try {
-            // const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
-            const res = await fetch(`/api/auth/login`, {
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
+            // const res = await fetch(`/api/auth/login`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
+                credentials: 'include',
                 body: JSON.stringify({ userName, password })
             })
 
@@ -29,6 +30,7 @@ const useLogin = () => {
 
             localStorage.setItem("chat-user", JSON.stringify(data));
             setAuthUser(data);
+            console.log(data);
         } catch (error) {
             toast.error(error.message);
         } finally {
