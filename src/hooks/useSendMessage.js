@@ -9,11 +9,13 @@ const useSendMessage = () => {
   const sentMessage = async (message) => {
     setLoading(true);
     try {
+      const token = localStorage.getItem("chat-token");
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/messages/send/${selectedConversation._id}`, {
-      // const res = await fetch(`/api/messages/send/${selectedConversation._id}`, {
         method: "POST",
-        headers: { "Content-type": "application/json" },
-        credentials: 'include',
+        headers: { 
+          "Content-type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ message })
       })
       const data = await res.json();
@@ -28,7 +30,6 @@ const useSendMessage = () => {
     }
   }
   return { sentMessage, loading };
-
 }
 
 export default useSendMessage

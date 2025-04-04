@@ -14,8 +14,11 @@ const useGetConversations = () => {
         const getConversations = async ()=>{
             setLoading(true);
             try{
+                const token = localStorage.getItem("chat-token");
                 const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
-                    credentials: 'include'
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
                 });
                 // const res = await fetch(`/api/users`);
                 const data = await res.json();

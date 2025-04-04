@@ -8,17 +8,20 @@ const useLogout = () => {
     const logout = async () => {
         setLoading(true);
         try {
+            const token = localStorage.getItem("chat-token");
             const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`, {
-            // const res = await fetch(`/api/auth/logout`, {
                 method: "POST",
-                headers: { "Content-type": "application/json" },
-                credentials: 'include'
+                headers: { 
+                    "Content-type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
             })
             const data = await res.json();
             if (data.error) {
                 throw new Error(data.error);
             }
 
+            localStorage.removeItem("chat-token");
             localStorage.removeItem("chat-user");
             setAuthUser(null);
         } catch (error) {

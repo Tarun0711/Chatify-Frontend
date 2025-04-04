@@ -10,10 +10,12 @@ const useGetMessages = () => {
         const getMessages = async () => {
             setLoading(true)
             try {
+                const token = localStorage.getItem("chat-token");
                 const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/messages/getMessages/${selectedConversation._id}`, {
-                    credentials: 'include'
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
                 });
-                // const res = await fetch(`/api/messages/getMessages/${selectedConversation._id}`);
 
                 const data = await res.json();
                 if (data.error) {

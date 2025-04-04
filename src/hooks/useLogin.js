@@ -19,7 +19,6 @@ const useLogin = () => {
             // const res = await fetch(`/api/auth/login`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
-                credentials: 'include',
                 body: JSON.stringify({ userName, password })
             })
 
@@ -28,6 +27,8 @@ const useLogin = () => {
                 throw new Error(data.error);
             }
 
+            // Save token and user data in localStorage
+            localStorage.setItem("chat-token", data.token);
             localStorage.setItem("chat-user", JSON.stringify(data));
             setAuthUser(data);
             console.log(data);
