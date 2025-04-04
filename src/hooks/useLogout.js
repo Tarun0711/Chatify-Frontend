@@ -8,7 +8,7 @@ const useLogout = () => {
     const logout = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem("chat-token");
+            const token = localStorage.getItem("chat-user");
             const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`, {
                 method: "POST",
                 headers: { 
@@ -21,8 +21,8 @@ const useLogout = () => {
                 throw new Error(data.error);
             }
 
-            localStorage.removeItem("chat-token");
             localStorage.removeItem("chat-user");
+            localStorage.removeItem("chat-user-data");
             setAuthUser(null);
         } catch (error) {
             toast.error(error.message);

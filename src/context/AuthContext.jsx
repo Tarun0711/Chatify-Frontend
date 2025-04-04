@@ -7,7 +7,10 @@ export const useAuthContext = ()=>{
 }
 
 export const AuthContextProvider = ({children})=>{
-    const [authUser, setAuthUser] = useState(JSON.parse(localStorage.getItem("chat-user")) || null);
+    const [authUser, setAuthUser] = useState(() => {
+        const userData = localStorage.getItem("chat-user-data");
+        return userData ? JSON.parse(userData) : null;
+    });
     const [selectedConversation, setSelectedConversation] = useState(null);
     const [messages, setMessages] = useState([]);
 

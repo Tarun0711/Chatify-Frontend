@@ -28,8 +28,8 @@ const useLogin = () => {
             }
 
             // Save token and user data in localStorage
-            localStorage.setItem("chat-token", data.token);
-            localStorage.setItem("chat-user", JSON.stringify(data));
+            localStorage.setItem("chat-user", data.token);
+            localStorage.setItem("chat-user-data", JSON.stringify(data));
             setAuthUser(data);
             console.log(data);
         } catch (error) {

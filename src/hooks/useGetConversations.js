@@ -14,7 +14,7 @@ const useGetConversations = () => {
         const getConversations = async ()=>{
             setLoading(true);
             try{
-                const token = localStorage.getItem("chat-token");
+                const token = localStorage.getItem("chat-user");
                 const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
                     headers: {
                         "Authorization": `Bearer ${token}`

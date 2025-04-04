@@ -9,7 +9,7 @@ const useSendMessage = () => {
   const sentMessage = async (message) => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("chat-token");
+      const token = localStorage.getItem("chat-user");
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/messages/send/${selectedConversation._id}`, {
         method: "POST",
         headers: { 
