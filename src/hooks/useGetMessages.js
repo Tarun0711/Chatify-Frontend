@@ -21,7 +21,20 @@ const useGetMessages = () => {
                 if (data.error) {
                     throw new Error(data.error);
                 }
-                setMessages(data);
+
+                // Ensure messages have proper sender and receiver data
+                const processedMessages = data.map(msg => ({
+                    ...msg,
+                    senderId: msg.senderId || { _id: msg.senderId },
+                    receiverId: msg.receiverId || { _id: msg.receiverId }
+                }));
+
+                // Sort messages by creation time
+                const sortedMessages = processedMessages.sort((a, b) => 
+                    new Date(a.createdAt) - new Date(b.createdAt)
+                );
+
+                setMessages(sortedMessages);
             } catch (error) {
                 toast.error(error.message)
             } finally {

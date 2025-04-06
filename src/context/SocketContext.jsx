@@ -16,19 +16,50 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io(`https://chatiify-backend.onrender.com/`, {
+      const socket = io(import.meta.env.VITE_BACKEND_URL, {
         query: {
           userId: authUser._id,
         },
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 1000,
+        transports: ['websocket'],
+        upgrade: false
       });
       setSocket(socket);
 
-      //socket.on() is used to listen to events, can be used both on client and server side
+      // Listen for online users
       socket.on("getOnlineUsers", (users) => {
         setOnlineUsers(users);
       });
 
-      return () => socket.close();
+      // Listen for connection events
+      socket.on("connect", () => {
+        console.log("Socket connected");
+      });
+
+      socket.on("disconnect", () => {
+        console.log("Socket disconnected");
+      });
+
+      socket.on("connect_error", (error) => {
+        console.error("Socket connection error:", error);
+      });
+
+      // Listen for message events
+      socket.on("messageReceived", (message) => {
+        console.log("Message received:", message);
+      });
+
+      // Cleanup function
+      return () => {
+        socket.off("getOnlineUsers");
+        socket.off("connect");
+        socket.off("disconnect");
+        socket.off("connect_error");
+        socket.off("messageReceived");
+        socket.close();
+      };
     } else {
       if (socket) {
         socket.close();
