@@ -10,7 +10,7 @@ const Message = ({ message }) => {
     ? message.senderId._id === authUser._id 
     : message.senderId === authUser._id;
     
-  const chatClassName = fromMe ? "chat-end" : "chat-start";
+  const chatClassName = fromMe ? "chat-end" : "chat-start"; 
   const profilePicture = fromMe
     ? authUser.profilePicture
     : selectedConversation?.profilePicture;
